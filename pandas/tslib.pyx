@@ -578,12 +578,10 @@ cdef class _Timestamp(datetime):
         
         if is_integer_object(other):
             if self.offset is None:
-                return Timestamp(self.value + other, tz=self.tzinfo)
-                msg = ("Cannot add integral value to Timestamp "
-                       "without offset.")
+                msg = "Cannot add integral value to Timestamp without offset."
                 raise ValueError(msg)
             else:
-                return Timestamp((self.offset.__mul__(other)).apply(self))
+                return Timestamp((self.offset * other).apply(self))
             
         if isinstance(other, timedelta) or hasattr(other, 'delta'):
             nanos = _delta_to_nanoseconds(other)

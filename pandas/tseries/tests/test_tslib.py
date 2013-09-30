@@ -1,5 +1,6 @@
 import unittest
 import nose
+from nose.tools import raises
 
 import numpy as np
 
@@ -158,6 +159,10 @@ class TestTimestamp(unittest.TestCase):
     def test_nanosecond_string_parsing(self):
         self.timestamp = Timestamp('2013-05-01 07:15:45.123456789')
         self.assertEqual(self.timestamp.value, 1367392545123456000)
+
+    @raises(ValueError)
+    def test_adding_integer_to_timestamp_should_raise_value_error(self):
+        self.timestamp + 123
 
 
 class TestTslib(unittest.TestCase):
